@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TodoList 2</title>
+    <style>
+      .container {
+        padding: 20px;
+      }
+      input[type="text"] {
+        
+        padding: 10px;
+        border: none;
+        border-bottom: 2px solid #ccc;
+        font-size: 16px;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .delete {
+        margin-left: 20%;
+        padding-right: 15px;
+        color: black;
+        cursor: pointer;
+
+      }
+
+      .move-down {
+        cursor: pointer;
+      }
+      .up {
+        cursor: pointer;
+      }
+      .button {
+            width: 10%;
+            padding-right: 2%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            color: white;
+            padding: 6px 9px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .button1 {
+            background-color: white;
+            color: black;
+            border: 2px solid #4CAF50;
+        }
+
+        .button1:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>TODOList</h1>
+      <form>
+        <input type="text" id="item"  placeholder="Adicionar..."/> 
+        <br><br>
+        <input type="submit" class="button button1" />
+      </form>
+      <ul id="list"></ul>
+    </div>
+
+    <script>
+      let todoList = [];
+
+      addEventListener("submit", function (event) {
+        event.preventDefault();
+        addItem();
+      });
+      function addItem() {
+        let newItem = document.getElementById("item").value;
+        todoList.push(newItem);
+        updateList();
+        document.getElementById("item").value = "";
+      }
+
+      function updateList() {
+  let list = document.getElementById("list");
+  list.innerHTML = "";
+
+  todoList.forEach((todoItem, index) => {
+    let li = document.createElement("li");
+    li.textContent = todoItem;
+
+    let deleteButton = document.createElement("span");
+    deleteButton.className = "delete";
+    deleteButton.textContent = "Delete";
+    deleteButton.setAttribute("data-index", index);
+    deleteButton.addEventListener("click", deleteItem);
+    li.appendChild(deleteButton);
+
+    if (index > 0) {
+      let upButton = document.createElement("span");
+      upButton.className = "up";
+      upButton.textContent = "+";
+      upButton.setAttribute("data-index", index);
+      upButton.addEventListener("click", moveItemUp);
+      li.appendChild(upButton);
+    }
+
+    if (index < todoList.length - 1) {
+      let moveDownButton = document.createElement("span");
+      moveDownButton.className = "move-down";
+      moveDownButton.textContent = "-";
+      moveDownButton.setAttribute("data-index", index);
+      moveDownButton.addEventListener("click", moveItemDown);
+      li.appendChild(moveDownButton);
+    }
+
+    list.appendChild(li);
+  });
+}
+
+function deleteItem() {
+  let index = parseInt(this.getAttribute("data-index"));
+  todoList.splice(index, 1);
+  updateList();
+}
+
+      function moveItemUp() {
+        let index = parseInt(this.getAttribute("data-index"));
+        let temp = todoList[index];
+        todoList[index] = todoList[index - 1];
+        todoList[index - 1] = temp;
+        updateList();
+      }
+      function moveItemDown() {
+        let index = parseInt(this.getAttribute("data-index"));
+        let temp = todoList[index];
+        todoList[index] = todoList[index + 1];
+        todoList[index + 1] = temp;
+        updateList();
+      }
+    </script>
+  </body>
+</html>

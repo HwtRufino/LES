@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        form {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        label {
+            margin-right: 10px;
+            line-height: 32px;
+        }
+
+        input[type="text"] {
+            padding: 6px 12px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: none;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        input[type="button"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 6px 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        input[type="button"]:hover {
+            background-color: #3e8e41;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        li {
+            padding: 8px 12px;
+            font-size: 16px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        let dado = [];
+
+        function adicionar() 
+        {
+            input = document.getElementById("input-item");
+            let newValue = input.value;
+            dado.push(newValue);
+            dado.sort();
+
+            let list = document.getElementById("list-items");
+            list.innerHTML = "";
+
+            dado.forEach((value) => 
+            {
+                let item = document.createElement("li");
+                let text = document.createTextNode(value);
+                item.appendChild(text);
+                list.appendChild(item);
+            });
+        }
+    </script>
+
+    <form action="" method="post">
+        <label for="input-item">Escreva algo: </label>
+        <input type="text" name="item-list" id="input-item" onkeydown="handleKey(event)" />
+        <input type="button" value="Ok" id="input-button" onclick="adicionar()" />
+    </form>
+    <ul id="list-items"></ul>
+</body>
+
+</html>
